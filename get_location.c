@@ -18,7 +18,7 @@ char *get_location(char *command)
 
             strcpy (filePath, pathToken);
             strcat (filePath, "/");
-            strcat (filePath, command);
+            strcat (filePath, command); 
 
             if (stat (filePath, &buff) == 0) {
 
