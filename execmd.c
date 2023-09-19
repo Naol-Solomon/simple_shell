@@ -32,20 +32,3 @@ void execmd(char **argv)
         return;
     }
 }
-    
-    /*  if (pid == -1) {
-            perror("Fork failed");
-    //         return;
-    //     }
-
-    //     if (pid == 0) {
-    //         if (execve(finalCommand, argv, NULL) == -1) {
-    //             perror ("Error executing command");
-    //             return;
-    //         }
-    //     } else {
-    //         int status;
-    //         waitpid(pid, &status, 0);
-    //     }
-    // }*/
-

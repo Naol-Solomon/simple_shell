@@ -14,12 +14,11 @@ char *get_location(char *command)
 
         while (pathToken != NULL){
             directoryLength = strlen(pathToken);
-            filePath = malloc(commandLength + directoryLength + 2);
+            filePath = malloc(commandLength + directoryLength + 2 + 1);
 
             strcpy (filePath, pathToken);
             strcat (filePath, "/");
             strcat (filePath, command);
-            strcat (filePath,"\0"); 
 
             if (stat (filePath, &buff) == 0) {
 

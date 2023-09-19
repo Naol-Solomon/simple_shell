@@ -46,7 +46,7 @@ int main(int ac, char **argv)
         }
 
         num_token++;
-        argv = malloc(sizeof(char) * num_token );
+        argv = malloc(sizeof(char*) * (num_token + 1));
 
         token = strtok(copyCommand, delim);
         for (i = 0; token != NULL; i++)
