@@ -1,8 +1,42 @@
 #include "main.h"
 
-int main(int ac, char **argv)
+void execmd(char **cmd_argv)
 {
-    char *prompt = "$ ";
+    pid_t child_pid;
+    int status;
+
+    child_pid = fork();
+
+    if (child_pid == -1)
+    {
+        perror("Fork failed");
+        exit(EXIT_FAILURE);
+    }
+    else if (child_pid == 0)
+    {
+        /* Child process */
+        char *command_location = get_location(cmd_argv[0]);
+        if (command_location == NULL) {
+            fprintf(stderr, "Command not found: %s\n", cmd_argv[0]);
+            exit(EXIT_FAILURE);
+        }
+
+        if (execve(command_location, cmd_argv, NULL) == -1)
+        {
+            perror("Execution failed");
+            exit(EXIT_FAILURE);
+        }
+    }
+    else
+    {
+        /* Parent process */
+        waitpid(child_pid, &status, 0);
+    }
+}
+
+int main(int ac, char **cmd_argv)
+{
+    char *prompt = ":) ";
     char *fullCommand = NULL, *copyCommand = NULL;
     char *token;
     size_t i;
@@ -10,8 +44,7 @@ int main(int ac, char **argv)
     size_t n = 0;
     ssize_t read;
     char *delim = " \n";
-
-    (void) ac;
+    (void)ac;
 
     while (1)
     {
@@ -21,10 +54,12 @@ int main(int ac, char **argv)
         if (read == -1)
         {
             printf("Exiting shell ...\n");
-            return (-1);
-        }
-        /* continue to display prompt while pressing enter key without inserting commands */
-        if (read <= 1){
+            break;
+	}
+        fullCommand[strcspn(fullCommand, "\n")] = '\0';
+
+        if (read <= 1)
+        {
             continue;
         }
 
@@ -46,26 +81,26 @@ int main(int ac, char **argv)
         }
 
         num_token++;
-       argv = malloc(sizeof(char*) * (num_token + 1));
+        cmd_argv = malloc(sizeof(char *) * (num_token + 1));
 
         token = strtok(copyCommand, delim);
         for (i = 0; token != NULL; i++)
         {
-            argv[i] = malloc(sizeof(char) * (strlen(token) + 1));
-            strcpy(argv[i], token);
+            cmd_argv[i] = malloc(sizeof(char) * (strlen(token) + 1));
+            strcpy(cmd_argv[i], token);
 
             token = strtok(NULL, delim);
         }
-        argv[i] = NULL;
-        execmd(argv);
+        cmd_argv[i] = NULL;
+        execmd(cmd_argv);
 
-        for (i = 0; i < num_token - 1; i++)
+        for (i = 0; i < num_token; i++)
         {
-            free(argv[i]);
-        } 
-        free(argv);
+            free(cmd_argv[i]);
+        }
+        free(cmd_argv);
     }
-    
+
     free(copyCommand);
     free(fullCommand);
     return (0);
