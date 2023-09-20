@@ -20,7 +20,8 @@ int main(int ac, char **cmd_argv)
 	(void)ac;
 
 	while (1)
-	{	if (isatty(STDIN_FILENO))
+	{
+		if (isatty(STDIN_FILENO))
 			write(STDOUT_FILENO, prompt, strlen(prompt));
 		read = getline(&fullCommand, &n, stdin);
 		if (read == -1)

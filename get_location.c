@@ -9,7 +9,7 @@
 char *get_location(char *command)
 {
 	char *path, *pathCopy, *pathToken, *filePath;
-	int commandLength, directoryLeng;
+	int commandLength, directoryLength;
 	struct stat buff;
 
 	path = getenv("PATH");
@@ -20,8 +20,8 @@ char *get_location(char *command)
 		pathToken = strtok(pathCopy, ":");
 		while (pathToken != NULL)
 		{
-			directoryLeng = strlen(pathToken);
-			filePath = malloc(commandLength + directoryLeng + 2 + 1);
+			directoryLength = strlen(pathToken);
+			filePath = malloc(commandLength + directoryLength + 2 + 1);
 			strcpy(filePath, pathToken);
 			strcat(filePath, "/");
 			strcat(filePath, command);
