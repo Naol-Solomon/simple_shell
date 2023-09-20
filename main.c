@@ -20,12 +20,13 @@ int main(int ac, char **cmd_argv)
 	(void)ac;
 
 	while (1)
-	{
-		write(STDOUT_FILENO, prompt, strlen(prompt));
+	{	if (isatty(STDIN_FILENO))
+			write(STDOUT_FILENO, prompt, strlen(prompt));
 		read = getline(&fullCommand, &n, stdin);
 		if (read == -1)
 		{
-			write(STDOUT_FILENO, "Exiting shell ...\n", 18);
+			if (isatty(STDIN_FILENO))
+				write(STDOUT_FILENO, "Exiting shell ...\n", 18);
 			break;
 		}
 		fullCommand[strcspn(fullCommand, "\n")] = '\0';
@@ -33,7 +34,7 @@ int main(int ac, char **cmd_argv)
 		{
 			continue;
 		}
-		copyCommand = malloc(sizeof(char) * read);
+		copyCommand = malloc(sizeof(char) * (read + 1));
 		if (copyCommand == NULL)
 		{
 			perror("Memory allocation failed");
@@ -62,8 +63,8 @@ int main(int ac, char **cmd_argv)
 			free(cmd_argv[i]);
 		}
 		free(cmd_argv);
+		free(copyCommand);
 	}
-	free(copyCommand);
 	free(fullCommand);
 	return (0);
 }

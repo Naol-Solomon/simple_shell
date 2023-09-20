@@ -11,6 +11,7 @@
 
 void execmd(char **argv);
 char *get_location(char *command);
+extern char *environ;
 
 #endif
 

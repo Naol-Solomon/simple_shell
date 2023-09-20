@@ -27,7 +27,7 @@ void execmd(char **cmd_argv)
             write(STDERR_FILENO, error_message, strlen(error_message));
             exit(EXIT_FAILURE);
         }
-        if (execve(command_location, cmd_argv, NULL) == -1)
+        if (execve(command_location, cmd_argv, environ) == -1)
         {
             free (command_location);
             for (i = 0; cmd_argv[i] != NULL; i++)
