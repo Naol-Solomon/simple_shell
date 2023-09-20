@@ -1,4 +1,5 @@
 #include "main.h"
+
 /**
  * main - Entry point of the shell program
  * @ac: The number of command-line arguments
@@ -20,11 +21,11 @@ int main(int ac, char **cmd_argv)
 
 	while (1)
 	{
-		printf("%s", prompt);
+		write(STDOUT_FILENO, prompt, strlen(prompt));
 		read = getline(&fullCommand, &n, stdin);
 		if (read == -1)
 		{
-			printf("Exiting shell ...\n");
+			write(STDOUT_FILENO, "Exiting shell ...\n", 18);
 			break;
 		}
 		fullCommand[strcspn(fullCommand, "\n")] = '\0';
