@@ -55,7 +55,7 @@ int main(int ac, char **cmd_argv)
         {
             printf("Exiting shell ...\n");
             break;
-	}
+	    }
         fullCommand[strcspn(fullCommand, "\n")] = '\0';
 
         if (read <= 1)
