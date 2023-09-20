@@ -8,10 +8,12 @@
 #include <string.h>
 #include <sys/wait.h>
 #include <sys/stat.h>
-
-void execmd(char **argv);
-char *get_location(char *command);
 extern char **environ;
 
-#endif
+/*function prototype*/
+void execmd(char **argv);
+char *get_location(char *command);
+void exit_shell();
+void print_environ();
 
+#endif

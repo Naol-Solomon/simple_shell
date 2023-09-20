@@ -29,6 +29,7 @@ int main(int ac, char **cmd_argv)
 				write(STDOUT_FILENO, "Exiting shell ...\n", 18);
 			break;
 		}
+		
 		fullCommand[strcspn(fullCommand, "\n")] = '\0';
 		if (read <= 1)
 		{
@@ -57,6 +58,15 @@ int main(int ac, char **cmd_argv)
 			token = strtok(NULL, delim);
 		}
 		cmd_argv[i] = NULL;
+		if (strcmp(cmd_argv[0], "exit") == 0)
+        {
+            exit_shell();
+        }
+        else if (strcmp(cmd_argv[0], "env") == 0)
+        {
+            print_environ();
+            continue;
+        }
 		execmd(cmd_argv);
 		for (i = 0; cmd_argv[i] != NULL; i++)
 		{
