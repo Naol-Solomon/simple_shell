@@ -6,6 +6,7 @@
  */
 void execmd(char **cmd_argv)
 {
+    int i = 0;
     pid_t child_pid;
     int status;
 
@@ -28,6 +29,11 @@ void execmd(char **cmd_argv)
         }
         if (execve(command_location, cmd_argv, NULL) == -1)
         {
+            free (command_location);
+            for (i = 0; cmd_argv[i] != NULL; i++)
+		    {
+			    free(cmd_argv[i]);
+		    }
             perror("Execution failed");
             exit(EXIT_FAILURE);
         }

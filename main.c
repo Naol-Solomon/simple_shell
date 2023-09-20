@@ -12,7 +12,7 @@ int main(int ac, char **cmd_argv)
 	char *prompt = ":) ";
 	char *fullCommand = NULL, *copyCommand = NULL;
 	char *token;
-	size_t i;
+	size_t i = 0;
 	size_t num_token = 0;
 	size_t n = 0;
 	ssize_t read;
@@ -57,7 +57,7 @@ int main(int ac, char **cmd_argv)
 		}
 		cmd_argv[i] = NULL;
 		execmd(cmd_argv);
-		for (i = 0; i < num_token; i++)
+		for (i = 0; cmd_argv[i] != NULL; i++)
 		{
 			free(cmd_argv[i]);
 		}
