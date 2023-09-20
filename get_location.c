@@ -1,9 +1,9 @@
 #include "main.h"
+
 /**
  * get_location - Retrieves the location of a command in the system's PATH
  * @command: The command to search for
- *
- * Return: The location of the command if found, NULL otherwise
+ *Return: The location of the command if found, NULL otherwise
  */
 
 char *get_location(char *command)
